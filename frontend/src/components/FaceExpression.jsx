@@ -36,7 +36,7 @@ export default function FaceExpression() {
       )
       .withFaceExpressions();
 
-      const displaySize = {
+    const displaySize = {
       width: videoRef.current.videoWidth,
       height: videoRef.current.videoHeight,
     };
@@ -50,7 +50,7 @@ export default function FaceExpression() {
         exp[a] > exp[b] ? a : b
       );
 
-      console.log("Expression:",maxExp);
+      console.log("Expression:", maxExp);
 
       setExpression(maxExp.toUpperCase());
     } else {
@@ -78,7 +78,7 @@ export default function FaceExpression() {
 
       <button
         onClick={detect}
-        className="mt-6 px-6 py-2 bg-black text-white rounded-lg shadow hover:bg-gray-800 transition"
+        className="mt-6 px-6 py-2 bg-gray-700 text-white rounded-lg shadow hover:bg-gray-800 transition"
       >
         Detect Expression
       </button>
