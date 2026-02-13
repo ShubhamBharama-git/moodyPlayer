@@ -11,8 +11,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@imagekit/nodejs": "^7.3.0",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
-    "mongoose": "^9.2.1"
+    "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
+    "router": "^2.2.0"
   }
 }
