@@ -6,15 +6,33 @@ const multer = require("multer")
 const upload = multer({ storage: multer.memoryStorage() })
 
 const uploadFile = require("../services/storage.sevice")
+const songModel = require("../models/songs.model")
 
 router.post("/songs", upload.single("audio"), async (req, res) => {
-    const responce = uploadFile(req.file);
+    try {
+        if (!req.file) {
+            return res.status(400).json({ msg: "No file uploaded" });
+        }
+        const response = await uploadFile(req.file);
 
-    res.status(201).json({
-        msg: "Song created successfully",
-        responce: responce
-    })
-})
+        let songs = await songModel.create({
+            title: req.body.title,
+            artist: req.body.artist,
+            audio: req.file.url,
+            mood: req.body.mood
+        })
+
+        res.status(201).json({
+            msg: "Song created successfully",
+            songs
+        });
+    }
+    catch (err) {
+        console.error("Upload Error:", err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 
 module.exports = router;

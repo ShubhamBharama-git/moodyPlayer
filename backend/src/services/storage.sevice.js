@@ -1,4 +1,6 @@
-const ImageKit = require("@imagekit/nodejs").default;
+const ImageKit = require("imagekit");
+const mongoose = require("mongoose")
+
 
 const imagekit = new ImageKit({
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
@@ -7,22 +9,19 @@ const imagekit = new ImageKit({
 });
 
 const uploadFile = async (file) => {
-    if (!file) throw new Error("No file provided");
+    if (!file || !file.buffer) throw new Error("File buffer is missing");
 
     try {
-        const res = await imagekit.files.upload({
+        const result = await imagekit.upload({
             file: file.buffer,
-            fileName: file.originalname,
+            fileName: new mongoose.Types.ObjectId().toString(),
             folder: "/songs",
             useUniqueFileName: true,
         });
 
-        console.log("Uploaded:", res);
-        return res;
-
-    } 
-    catch (err) {
-        console.error("ImageKit Upload Error:", err.message);
+        return result;
+    } catch (err) {
+        console.error("ImageKit SDK Error Details:", err);
         throw err;
     }
 };
